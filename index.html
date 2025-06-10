@@ -24,7 +24,7 @@
     }
     .start-btn {
       padding: 20px 40px;
-      background-color: #ff94b8;
+      background-color: #ff4d88;
       color: white;
       border: none;
       font-size: 1.5em;
@@ -56,9 +56,12 @@
       opacity: 1;
     }
     .pedido img {
-      max-width: 320px;
-      border-radius: 20px;
-      margin-top: 20px;
+      max-width: 280px;
+      margin-top: 10px;
+      background: transparent;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
     .heart {
       position: absolute;
@@ -85,17 +88,11 @@
       50% { opacity: 0.7; }
       100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
     }
-    button {
-      cursor: pointer;
+    button:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
     }
   </style>
-<style>
-button:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
-}
-</style>
-
 </head>
 <body>
 
@@ -107,9 +104,10 @@ button:hover {
   <div id="msg2" class="mensagem">🤔 Ué, mas a gente namora?</div>
   <div id="msg3" class="mensagem">😳 Hmmm, me diz você então...</div>
   <div id="contador" class="contador"></div>
+
   <div id="pedido" class="pedido">
-    <h1 id="frasePedido" style="margin-bottom: 20px;">Quer namorar comigo?</h1>
-    <img src="meme-sushi-final.png" alt="Pedido sushi" style="background: transparent; display: block; margin: 0 auto; max-width: 300px;" style="background: transparent !important; border: none; box-shadow: none;" style="background: none; margin-top: 10px;" />
+    <h1>Quer namorar comigo?</h1>
+    <img src="meme-sushi-final.png" alt="Pedido fofo" />
   </div>
 
   <div id="resposta" class="pedido" style="margin-top: 30px; display: none;">
@@ -155,8 +153,8 @@ button:hover {
           contador.classList.remove('show');
           pedido.classList.add('show');
           setTimeout(() => {
-            setTimeout(() => { setTimeout(() => { resposta.style.display = "block"; }, 3000); }, 3000);
-          }, 1000);
+            resposta.style.display = 'block';
+          }, 3000);
         }
       }, 1000);
     }
@@ -196,7 +194,6 @@ button:hover {
     }`;
     document.head.appendChild(style);
 
-    // corações flutuantes no fundo
     for (let i = 0; i < 20; i++) {
       let heart = document.createElement('div');
       heart.className = 'heart';
