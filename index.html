@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surpresa de Dia dos Namorados 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffc6d0, #ff8fa3);
+      font-family: 'Quicksand', sans-serif;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+    }
+    .center-screen {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    .start-btn {
+      padding: 20px 40px;
+      background-color: #ff94b8;
+      color: white;
+      border: none;
+      font-size: 1.5em;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 10px rgba(255, 77, 136, 0.4);
+    }
+    .start-btn:hover {
+      background-color: #e6396d;
+      transform: scale(1.05);
+    }
+    .mensagem, .contador, .pedido {
+      font-size: 2em;
+      color: #ff4d88;
+      transition: opacity 1.2s ease;
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+    .mensagem.show, .contador.show, .pedido.show {
+      opacity: 1;
+    }
+    .pedido img {
+      max-width: 320px;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff4d88;
+      transform: rotate(45deg);
+      animation: floatUp 10s linear infinite;
+      opacity: 0.6;
+    }
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff4d88;
+      border-radius: 50%;
+    }
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { left: -10px; top: 0; }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+      50% { opacity: 0.7; }
+      100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+    }
+    button {
+      cursor: pointer;
+    }
+  </style>
+<style>
+button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+</style>
+
+</head>
+<body>
+
+  <div id="startScreen" class="center-screen">
+    <button class="start-btn" onclick="iniciar()">💖 Clique aqui para começar 💖</button>
+  </div>
+
+  <div id="msg1" class="mensagem">💘 Feliz Dia dos Namorados! 💘</div>
+  <div id="msg2" class="mensagem">🤔 Ué, mas a gente namora?</div>
+  <div id="msg3" class="mensagem">😳 Hmmm, me diz você então...</div>
+  <div id="contador" class="contador"></div>
+  <div id="pedido" class="pedido">
+    <h1 id="frasePedido" style="margin-bottom: 20px;">Quer namorar comigo?</h1>
+    <img src="meme-sushi-final.png" alt="Pedido sushi" style="background: transparent !important; border: none; box-shadow: none;" style="background: none; margin-top: 10px;" />
+  </div>
+
+  <div id="resposta" class="pedido" style="margin-top: 30px; display: none;">
+    <button onclick="responder(true)" style="padding: 15px 25px; font-size: 1.2em; border-radius: 20px; background-color: #ff94b8; color: white; border: none; margin: 10px; box-shadow: 0 4px 10px rgba(255, 148, 184, 0.4); transition: all 0.3s;">Sim 💖</button>
+    <button onclick="responder(false)" style="padding: 15px 25px; font-size: 1.2em; border-radius: 20px; background-color: #ff4d4d; color: white; border: none; margin: 10px; box-shadow: 0 4px 10px rgba(255, 77, 77, 0.4); transition: all 0.3s;">Não 😢</button>
+  </div>
+
+  <div id="mensagemFinal" class="mensagem" style="font-size: 2em;"></div>
+  <div id="explosaoCoracoes"></div>
+
+  <audio id="musica" src="musica.mp3" preload="auto" autoplay loop></audio>
+
+  <script>
+    const msg1 = document.getElementById('msg1');
+    const msg2 = document.getElementById('msg2');
+    const msg3 = document.getElementById('msg3');
+    const contador = document.getElementById('contador');
+    const pedido = document.getElementById('pedido');
+    const resposta = document.getElementById('resposta');
+    const mensagemFinal = document.getElementById('mensagemFinal');
+    const musica = document.getElementById('musica');
+
+    function iniciar() {
+      document.getElementById('startScreen').remove();
+      musica.play().catch(() => { console.log("Autoplay bloqueado"); });
+      setTimeout(() => { msg1.classList.add('show'); }, 1000);
+      setTimeout(() => { msg1.classList.remove('show'); msg2.classList.add('show'); }, 5000);
+      setTimeout(() => { msg2.classList.remove('show'); msg3.classList.add('show'); }, 9500);
+      setTimeout(() => { msg3.classList.remove('show'); startCountdown(2); }, 11500);
+    }
+
+    function startCountdown(seconds) {
+      contador.classList.add('show');
+      let current = seconds;
+      contador.innerText = current;
+
+      const interval = setInterval(() => {
+        current--;
+        if (current > 0) {
+          contador.innerText = current;
+        } else {
+          clearInterval(interval);
+          contador.classList.remove('show');
+          pedido.classList.add('show');
+          setTimeout(() => {
+            setTimeout(() => { resposta.style.display = "block"; }, 3000);
+          }, 1000);
+        }
+      }, 1000);
+    }
+
+    function responder(sim) {
+      resposta.style.display = 'none';
+      if (sim) {
+        mensagemFinal.innerText = "Então pode abrir a caixa... 💝";
+        mensagemFinal.classList.add('show');
+        explodirCoracoes();
+      } else {
+        mensagemFinal.innerText = "Nem queria mesmo 😤";
+        mensagemFinal.classList.add('show');
+      }
+    }
+
+    function explodirCoracoes() {
+      const container = document.getElementById('explosaoCoracoes');
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement('div');
+        heart.textContent = '💖';
+        heart.style.position = 'absolute';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = Math.random() * 100 + 'vh';
+        heart.style.fontSize = (Math.random() * 24 + 16) + 'px';
+        heart.style.animation = 'cair 2s ease-out forwards';
+        container.appendChild(heart);
+        setTimeout(() => container.removeChild(heart), 2000);
+      }
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+    @keyframes cair {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(100px) scale(0.5); opacity: 0; }
+    }`;
+    document.head.appendChild(style);
+
+    // corações flutuantes no fundo
+    for (let i = 0; i < 20; i++) {
+      let heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (8 + Math.random() * 5) + 's';
+      heart.style.width = heart.style.height = (10 + Math.random() * 20) + 'px';
+      document.body.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
