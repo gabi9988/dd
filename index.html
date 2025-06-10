@@ -109,7 +109,7 @@ button:hover {
   <div id="contador" class="contador"></div>
   <div id="pedido" class="pedido">
     <h1 id="frasePedido" style="margin-bottom: 20px;">Quer namorar comigo?</h1>
-    <img src="meme-sushi-final.png" alt="Pedido sushi" style="background: transparent !important; border: none; box-shadow: none;" style="background: none; margin-top: 10px;" />
+    <img src="meme-sushi-final.png" alt="Pedido sushi" style="background: transparent; display: block; margin: 0 auto; max-width: 300px;" style="background: transparent !important; border: none; box-shadow: none;" style="background: none; margin-top: 10px;" />
   </div>
 
   <div id="resposta" class="pedido" style="margin-top: 30px; display: none;">
@@ -155,7 +155,7 @@ button:hover {
           contador.classList.remove('show');
           pedido.classList.add('show');
           setTimeout(() => {
-            setTimeout(() => { resposta.style.display = "block"; }, 3000);
+            setTimeout(() => { setTimeout(() => { resposta.style.display = "block"; }, 3000); }, 3000);
           }, 1000);
         }
       }, 1000);
