@@ -131,7 +131,7 @@
 
     function iniciar() {
       document.getElementById('startScreen').remove();
-      musica.play().catch(() => { console.log("Autoplay bloqueado"); });
+      musica.play().then(() => {}).catch(() => { console.log("Autoplay bloqueado"); });
       setTimeout(() => { msg1.classList.add('show'); }, 1000);
       setTimeout(() => { msg1.classList.remove('show'); msg2.classList.add('show'); }, 5000);
       setTimeout(() => { msg2.classList.remove('show'); msg3.classList.add('show'); }, 9500);
@@ -152,7 +152,7 @@
           contador.classList.remove('show');
           pedido.classList.add('show');
           setTimeout(() => {
-            resposta.style.display = 'block';
+            setTimeout(() => { resposta.style.display = "block"; }, 3000);
           }, 3000);
         }
       }, 1000);
